@@ -1,15 +1,18 @@
 use std::io;
 use std::io::stdin;
+use std::task::Context;
 use sha2::{Digest, Sha256};
-use sha2::digest::DynDigest;
+use sha2::digest::{DynDigest, Output, Update};
+use sha2::digest::core_api::CoreWrapper;
 
 fn main() {
    //let (zero, num_quentity) = input();
-
-    let mut num = 0;
+    let mut res_hash;
+    let mut num: i64 = 0;
     loop{
         num +=1;
-        println!("{}", &num);
+        res_hash = calc_hesh(num);
+        //println!("{}", &num);
     }
 
 }
@@ -28,11 +31,13 @@ fn input () -> (i64, i64){
 
     (imput_zero, imput_num)
 }
-/*fn calc_hesh (zero: i64, num: String){
+fn calc_hesh <T: sha2::digest::OutputSizeUser> (num: T) ->Output<T>  {
     let mut calc_hash = Sha256::new();
-    calc_hash.update(num.to_string().parse().expect("Err parse to hash"));
+    let num = num.to_string();
+    //println!("{}", &num);
+    Digest::update(&mut calc_hash, &num);
     let res = calc_hash.finalize();
-    println!("{:?}", res)
-
-}*/
+    //println!("{}, {:x}",num, &res);
+    res
+}
 

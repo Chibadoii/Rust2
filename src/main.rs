@@ -6,25 +6,32 @@ use sha2::digest::{DynDigest, Output, Update};
 use sha2::digest::core_api::CoreWrapper;
 
 fn main() {
-   //let (zero, num_quentity) = input();
+   let (zero, num_quentity) = input();
     let mut str_hash_num = String::new();
     let mut num: i64  = 0;
-    calc_hesh()
-    /*loop{
+    let mut quantity = 0;
+    loop{
         num +=1;
-        let  byte_str_num = num.to_le_bytes();
-        let res_hash = calc_hesh(&byte_str_num);
-        //calc_last_num_hash(res_hash);
-        /*for i in res_hash{
-            //if i != 0 {
-                str_hash_num.push(i.to_string().parse().unwrap());
-                println!("{}", &str_hash_num);
-            //}
-        }*/
+        str_hash_num = num.to_string();
+        let res_hash = calc_hesh(str_hash_num);
+        println!("{}", &res_hash);
 
-    }*/
+        let (num_zero) =iter_char_hash((&res_hash).to_string(),zero);
 
-}
+        if num_zero {
+            println!("{} ", num);
+            println!("{}", res_hash);
+            quantity +=1;
+        }
+        if quantity == num_quentity {
+            break
+        }
+
+        }
+
+    }
+
+
 
 fn input () -> (i64, i64){
 
@@ -40,26 +47,30 @@ fn input () -> (i64, i64){
 
     (imput_zero, imput_num)
 }
-fn calc_hesh ()//(num: &[u8]) -> [u8; 32]
+fn calc_hesh (num: String) -> String
 {
-    /*let mut calc_hash = Sha256::new();
-    Digest::update(&mut calc_hash, &num);
-    let res =calc_hash.finalize();
-    let mut re_out = [0; 32];
-    re_out.copy_from_slice(&res);
-    println!("{:x?}", &re_out);*/
+    let hash = Sha256::new().chain(num).finalize();
+    let s = format!("{:x}", hash);
+    println!("{}", &s);
 
-    let mut bb = 1;
-    let bb: String = bb.to_string().parse().unwrap();
-    let mut hasher = Sha256::new();
-    Digest::update(&mut hasher, &bb);
-    let result = hasher.finalize();
-    println!("{:?}", result);
-    //re_out
+    s
 }
-/*fn calc_last_num_hash  (res_hash: Output<i64>){
-    //println!("{:?}", array);
-    let var = res_hash.to_string().expect("Err hash to string");
+fn iter_char_hash (res_hash: String, zero: i64) -> bool {
+    let mut res_num= false;
+    //Кол во
+    let mut num_zero = 0;
+    let char_zero = '0';
 
-}*/
+        for c in res_hash.chars().rev() {
+            if c == char_zero {
+                num_zero += 1;
+            } else { break; }
 
+    }
+    if num_zero == zero{
+        res_num = true;
+    }
+
+    //вывод счетчика для завершения луп
+    res_num
+}

@@ -12,7 +12,8 @@ fn main() {
     loop{
         num +=1;
         res_hash = calc_hesh(num);
-        //println!("{}", &num);
+        //calc_last_num_hash(res_hash);
+        println!("{:x}", &res_hash);
     }
 
 }
@@ -36,8 +37,17 @@ fn calc_hesh <T: sha2::digest::OutputSizeUser> (num: T) ->Output<T>  {
     let num = num.to_string();
     //println!("{}", &num);
     Digest::update(&mut calc_hash, &num);
-    let res = calc_hash.finalize();
+    let res =calc_hash.finalize();
+    let res = match res{
+        Ok(res)=> res,
+        Err(e)=> panic!("Err calc hash {}", e)
+    };
     //println!("{}, {:x}",num, &res);
     res
 }
+/*fn calc_last_num_hash  (res_hash: Output<i64>){
+    //println!("{:?}", array);
+    let var = res_hash.to_string().expect("Err hash to string");
+
+}*/
 

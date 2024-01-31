@@ -16,7 +16,7 @@ fn main() {
         let res_hash = calc_hesh(str_hash_num);
         //println!("{}", &res_hash);
 
-        let (num_zero) =iter_char_hash((&res_hash).to_string(),zero);
+        let num_zero =iter_char_hash((&res_hash).to_string(),zero);
 
         if num_zero {
             println!("{}, ", &num);
@@ -57,7 +57,7 @@ fn calc_hesh (num: String) -> String
 }
 fn iter_char_hash (res_hash: String, zero: i64) -> bool {
     let mut res_num= false;
-    //Кол во
+
     let mut num_zero = 0;
     let char_zero = '0';
 
@@ -73,6 +73,6 @@ fn iter_char_hash (res_hash: String, zero: i64) -> bool {
         res_num = true;
     }
     num_zero=0;
-    //вывод счетчика для завершения луп
+
     res_num
 }
